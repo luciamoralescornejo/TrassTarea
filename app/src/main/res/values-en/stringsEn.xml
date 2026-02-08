@@ -46,6 +46,10 @@
     <string name="Espanol">ES</string>
     <string name="Nueva">New</string>
 
+    <string name="Preferencias">Preferences</string>
+
+    <string name="sinArchivo">No file</string>
+
     <!-- Strings para llenar el spinner -->
     <string-array name="spinnerOpciones">
         <item>Not started</item>

@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.trasstarea.Actividades.DescripcionActivity;
 import com.example.trasstarea.Actividades.EditarActivity;
 import com.example.trasstarea.Modelo.Tarea;
 
@@ -68,28 +69,25 @@ public class Adapter extends RecyclerView.Adapter<Adapter.TareaViewHolder> {
         }
 
         public void bindTarea(Tarea tarea) {
-            titulo.setText(tarea.getTitulo()); // mostrar título
-            progress.setProgress(tarea.getProgreso()); // mostrar progreso
-            fecha.setText(tarea.getFechaObjetivo()); // mostrar fecha objetivo
+            titulo.setText(tarea.getTitulo());
+            progress.setProgress(tarea.getProgreso());
+            fecha.setText(tarea.getFechaObjetivo());
 
-            // calcular días restantes
             try {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                 LocalDate fechaObjetivo = LocalDate.parse(tarea.getFechaObjetivo(), formatter);
                 long diasRestantes = ChronoUnit.DAYS.between(LocalDate.now(), fechaObjetivo);
                 cantidad.setText(String.valueOf(diasRestantes));
-            } catch (Exception e) { // error en formato de fecha
+            } catch (Exception e) {
                 fecha.setText("Fecha inválida");
                 cantidad.setText("-");
             }
 
-            // clic normal: mostrar descripción en alerta
+            // clic normal: abrir DescripcionActivity
             itemView.setOnClickListener(v -> {
-                new AlertDialog.Builder(itemView.getContext())
-                        .setTitle(tarea.getTitulo())
-                        .setMessage(tarea.getDescripcion())
-                        .setPositiveButton("Cerrar", null)
-                        .show();
+                Intent intent = new Intent(itemView.getContext(), DescripcionActivity.class);
+                intent.putExtra("posicion", getAdapterPosition());
+                itemView.getContext().startActivity(intent);
             });
 
             // clic largo: mostrar menú contextual (Editar / Borrar)

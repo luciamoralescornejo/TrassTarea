@@ -46,6 +46,10 @@
     <string name="Nueva">Nueva</string>
     <string name="Preferencias">Preferencias</string>
 
+    <string name="sinArchivo">Sin archivo</string>
+    <string name="Detalle">Detalle</string>
+
+
     <!-- Strings para llenar el spinner -->
     <string-array name="spinnerOpciones">
         <item>No iniciada</item>

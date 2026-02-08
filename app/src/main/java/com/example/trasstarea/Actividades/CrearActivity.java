@@ -13,6 +13,7 @@ import com.example.trasstarea.R;
 import com.example.trasstarea.TareaViewModel;
 import com.example.trasstarea.Tareas;
 
+import java.io.File;
 import java.util.Objects;
 
 public class CrearActivity extends BaseActivity
@@ -93,22 +94,43 @@ public class CrearActivity extends BaseActivity
             finish();
         }
     }
-
-    // 🔹 NUEVO MÉTODO (ARCHIVOS)
     @Override
     public void onArchivoSeleccionado(Uri uri, int tipo) {
+
+        String nombre;
+        File archivo;
+
         switch (tipo) {
             case 1:
-                viewModel.uriDocumento.setValue(uri);
+                nombre = "documento_" + System.currentTimeMillis();
+                archivo = guardarArchivo(uri, nombre);
+                if (archivo != null) {
+                    viewModel.uriDocumento.setValue(Uri.fromFile(archivo));
+                }
                 break;
+
             case 2:
-                viewModel.uriImagen.setValue(uri);
+                nombre = "imagen_" + System.currentTimeMillis();
+                archivo = guardarArchivo(uri, nombre);
+                if (archivo != null) {
+                    viewModel.uriImagen.setValue(Uri.fromFile(archivo));
+                }
                 break;
+
             case 3:
-                viewModel.uriAudio.setValue(uri);
+                nombre = "audio_" + System.currentTimeMillis();
+                archivo = guardarArchivo(uri, nombre);
+                if (archivo != null) {
+                    viewModel.uriAudio.setValue(Uri.fromFile(archivo));
+                }
                 break;
+
             case 4:
-                viewModel.uriVideo.setValue(uri);
+                nombre = "video_" + System.currentTimeMillis();
+                archivo = guardarArchivo(uri, nombre);
+                if (archivo != null) {
+                    viewModel.uriVideo.setValue(Uri.fromFile(archivo));
+                }
                 break;
         }
     }

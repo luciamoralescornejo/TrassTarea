@@ -5,12 +5,23 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
+
+import android.net.Uri;
+import android.os.Environment;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.PreferenceManager;
+import android.os.Environment;
+import java.io.File;
 
 import com.example.trasstarea.R;
 
@@ -129,5 +140,57 @@ public class BaseActivity extends AppCompatActivity {
         Configuration configuracion = recursos.getConfiguration();
         configuracion.setLocale(locale);
         recursos.updateConfiguration(configuracion, recursos.getDisplayMetrics());
+    }
+
+    //metodo común para obtener el directorio de adjuntos
+    protected File getDirectorioAdjuntos() {
+        File baseDir;
+
+        if (sd && Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+            baseDir = getExternalFilesDir(null); // SD / memoria externa
+        } else {
+            baseDir = getFilesDir(); // memoria interna
+        }
+
+        File adjuntos = new File(baseDir, "adjuntos");
+        if (!adjuntos.exists()) {
+            adjuntos.mkdirs();
+        }
+
+        return adjuntos;
+    }
+
+    protected File guardarArchivo(Uri uri, String nombreArchivo) {
+
+        File baseDir;
+        if (sd && Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+            baseDir = getExternalFilesDir(null);
+        } else {
+            baseDir = getFilesDir();
+        }
+
+        File carpetaAdjuntos = new File(baseDir, "adjuntos");
+        if (!carpetaAdjuntos.exists()) {
+            carpetaAdjuntos.mkdirs();
+        }
+
+        File destino = new File(carpetaAdjuntos, nombreArchivo);
+
+        try (InputStream in = getContentResolver().openInputStream(uri);
+             OutputStream out = new FileOutputStream(destino)) {
+
+            byte[] buffer = new byte[1024];
+            int leidos;
+            while ((leidos = in.read(buffer)) != -1) {
+                out.write(buffer, 0, leidos);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        Log.d("ARCHIVOS", "Guardado en: " + destino.getAbsolutePath());
+        return destino;
     }
 }

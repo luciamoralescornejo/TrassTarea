@@ -26,6 +26,7 @@
         <activity android:name=".Actividades.EditarActivity" />
         <activity android:name=".Actividades.BaseActivity" />
         <activity android:name=".Actividades.SettingsActivity" />
+        <activity android:name=".Actividades.DescripcionActivity" />
 
     </application>
 
