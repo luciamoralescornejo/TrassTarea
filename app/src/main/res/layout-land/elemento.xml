@@ -1,100 +1,107 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
     app:cardCornerRadius="20dp"
-    app:cardElevation="6dp">
+    app:cardElevation="6dp"
+    app:cardBackgroundColor="?attr/colorSurface">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/amarilloPastel"
+        android:background="?attr/colorSurface"
+        android:backgroundTint="@color/amarillo"
         android:padding="8dp">
 
-        <!-- Icono izquierdo -->
         <ImageView
             android:id="@+id/imageView4"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="35dp"
+            android:layout_height="20dp"
             android:src="@drawable/estrella"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Contenedor horizontal de título y progreso -->
-        <LinearLayout
-            android:id="@+id/linearHorizontal"
+        <TextView
+            android:id="@+id/txtTitulo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_marginStart="8dp"
+            android:text="@string/Titulo"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/imageView4"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintEnd_toEndOf="parent" />
 
-            <!-- Título -->
-            <TextView
-                android:id="@+id/txtTitulo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/Titulo"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+        <!-- ProgressBar ahora ocupa TODO el ancho -->
+        <ProgressBar
+            android:id="@+id/progress"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="0dp"
+            android:layout_height="18dp"
+            android:layout_marginTop="8dp"
+            android:progressBackgroundTint="?attr/colorOnSurface"
+            android:progressTint="@color/maquillajeOscuro"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtTitulo" />
 
-            <!-- Barra de progreso y textos alineados horizontalmente -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="4dp"
-                android:gravity="center_vertical">
+        <!-- FILA DE TEXTOS ABAJO DEL PROGRESSBAR -->
+        <TextView
+            android:id="@+id/txtFecha"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/txt_fecha"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/txtQuedan"
+            app:layout_constraintTop_toBottomOf="@id/progress" />
 
-                <ProgressBar
-                    android:id="@+id/progress"
-                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="18dp"/>
+        <TextView
+            android:id="@+id/txtQuedan"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/txt_quedan"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            android:gravity="center"
+            app:layout_constraintStart_toEndOf="@id/txtFecha"
+            app:layout_constraintEnd_toStartOf="@id/txtDias"
+            app:layout_constraintTop_toBottomOf="@id/progress" />
 
-                <TextView
-                    android:id="@+id/txtFecha"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="@string/txt_fecha"
-                    android:textSize="10sp"/>
+        <TextView
+            android:id="@+id/txtDias"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/txt_00"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            android:gravity="center"
+            app:layout_constraintStart_toEndOf="@id/txtQuedan"
+            app:layout_constraintEnd_toStartOf="@id/txtdias"
+            app:layout_constraintTop_toBottomOf="@id/progress" />
 
-                <TextView
-                    android:id="@+id/txtQuedan"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="@string/txt_quedan"
-                    android:textSize="10sp"/>
-
-                <TextView
-                    android:id="@+id/txtDias"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="@string/txt_00"
-                    android:textSize="10sp"/>
-
-                <TextView
-                    android:id="@+id/txtdias"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="@string/txt_dias"
-                    android:textSize="10sp"/>
-            </LinearLayout>
-
-        </LinearLayout>
+        <TextView
+            android:id="@+id/txtdias"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/txt_dias"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            android:gravity="center"
+            app:layout_constraintStart_toEndOf="@id/txtDias"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/progress" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
