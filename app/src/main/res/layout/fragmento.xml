@@ -41,13 +41,31 @@
         android:layout_marginBottom="10dp"
         android:text="@string/Prioritaria" />
 
-    <Button
-        android:id="@+id/btnSiguiente"
-        android:layout_width="wrap_content"
+    <!-- LAYOUT PARA BOTONES -->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/maquillaje"
-        android:text="@string/Siguiente"
-        android:textColor="@color/black"
-        android:layout_gravity="center_horizontal"/>
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="10dp">
+
+        <Button
+            android:id="@+id/btnCancelar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/maquillaje"
+            android:text="@string/Volver"
+            android:textColor="@color/black"
+            android:layout_marginRight="10dp"/>
+
+        <Button
+            android:id="@+id/btnSiguiente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/maquillaje"
+            android:text="@string/Siguiente"
+            android:textColor="@color/black"/>
+
+    </LinearLayout>
 
 </LinearLayout>
