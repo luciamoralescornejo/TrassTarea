@@ -22,59 +22,62 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.Calendar;
 
 public class Fragmento extends Fragment {
-    private FragmentoListener listener; // referencia a la actividad que escucha
 
-    // interfaz que la actividad debe implementar para recibir los datos
+    private FragmentoListener listener;
+
     public interface FragmentoListener {
         void onDatosIngresados(String titulo, String fechaCreacion, String fechaObjetivo,
-                               int progreso, boolean prioritaria); // enviar datos al activity
+                               int progreso, boolean prioritaria);
+
+        void onVolver();
     }
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        listener = (FragmentoListener) context; // asegura que la actividad implementa la interfaz
+        try {
+            listener = (FragmentoListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " debe implementar FragmentoListener");
+        }
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragmento, container, false); // infla layout del fragmento
+        return inflater.inflate(R.layout.fragmento, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        // enlazar campos de la UI
         EditText etTitulo = view.findViewById(R.id.etTituloEditar);
         EditText etFechaCreacion = view.findViewById(R.id.etFechaCreacionEditar);
         EditText etFechaObjetivo = view.findViewById(R.id.etFechaObjetivoEditar);
 
-        // mostrar DatePicker al pulsar los EditText de fecha
         etFechaCreacion.setOnClickListener(v -> mostrarDatePicker(etFechaCreacion));
         etFechaObjetivo.setOnClickListener(v -> mostrarDatePicker(etFechaObjetivo));
 
-        Spinner spProgreso = view.findViewById(R.id.spProgresoEditar); // spinner de progreso
+        Spinner spProgreso = view.findViewById(R.id.spProgresoEditar);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 getContext(),
-                R.array.spinnerOpciones, // opciones del spinner
+                R.array.spinnerOpciones,
                 android.R.layout.simple_spinner_item
         );
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spProgreso.setAdapter(adapter); // asignar adaptador al spinner
+        spProgreso.setAdapter(adapter);
 
-        CheckBox cbPrioritaria = view.findViewById(R.id.cbPrioritariaEditar); // checkbox prioridad
-        Button btnSiguiente = view.findViewById(R.id.btnSiguiente); // boton siguiente
+        CheckBox cbPrioritaria = view.findViewById(R.id.cbPrioritariaEditar);
+        Button btnSiguiente = view.findViewById(R.id.btnSiguiente);
 
         btnSiguiente.setOnClickListener(v -> {
-            // obtener valores de los campos
             String titulo = etTitulo.getText().toString().trim();
             String fechaCreacion = etFechaCreacion.getText().toString().trim();
             String fechaObjetivo = etFechaObjetivo.getText().toString().trim();
             int[] valoresProgreso = {0, 25, 50, 75, 100};
-            int progreso = valoresProgreso[spProgreso.getSelectedItemPosition()]; // valor seleccionado
-            boolean prioritaria = cbPrioritaria.isChecked(); // estado checkbox
+            int progreso = valoresProgreso[spProgreso.getSelectedItemPosition()];
+            boolean prioritaria = cbPrioritaria.isChecked();
 
-            // validar campos obligatorios
             if (titulo.isEmpty()) {
                 Snackbar.make(view, getString(R.string.tituloVacio), Snackbar.LENGTH_SHORT).show();
                 return;
@@ -88,12 +91,17 @@ public class Fragmento extends Fragment {
                 return;
             }
 
-            // enviar datos a la actividad
             listener.onDatosIngresados(titulo, fechaCreacion, fechaObjetivo, progreso, prioritaria);
+        });
+
+        Button btnVolver = view.findViewById(R.id.btnVolver);
+        btnVolver.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onVolver();
+            }
         });
     }
 
-    // método para mostrar selector de fecha
     private void mostrarDatePicker(EditText editText) {
         Calendar c = Calendar.getInstance();
         int anio = c.get(Calendar.YEAR);
