@@ -21,7 +21,7 @@ import com.example.trasstarea.Tareas;
 
 import java.util.ArrayList;
 
-public class ListarActivity extends AppCompatActivity {
+public class ListarActivity extends BaseActivity {
 
     private RecyclerView recyclerView; // lista visual de tareas
     private Adapter adaptador; // adaptador para mostrar las tareas

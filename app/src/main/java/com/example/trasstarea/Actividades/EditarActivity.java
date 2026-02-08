@@ -14,7 +14,7 @@ import com.example.trasstarea.Modelo.Tarea;
 import com.example.trasstarea.R;
 import com.example.trasstarea.Tareas;
 
-public class EditarActivity extends AppCompatActivity {
+public class EditarActivity extends BaseActivity {
     private int index; // posición de la tarea en la lista
     private Tarea tarea; // objeto Tarea a editar
 

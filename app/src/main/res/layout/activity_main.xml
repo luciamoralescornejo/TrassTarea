@@ -82,7 +82,7 @@
     <!-- Botón empezar centrado abajo -->
     <Button
         android:id="@+id/bt_empezar"
-        android:layout_width="118dp"
+        android:layout_width="125dp"
         android:layout_height="61dp"
         android:backgroundTint="@color/maquillaje"
         android:text="@string/btn_inicio"

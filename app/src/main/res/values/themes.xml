@@ -11,7 +11,6 @@
         <item name="colorAccent">@color/maquillaje</item>
 
         <!-- Toolbar / menú -->
-        <item name="colorPrimary">@color/maquillaje</item>
         <item name="colorOnPrimary">@color/black</item>
 
     </style>

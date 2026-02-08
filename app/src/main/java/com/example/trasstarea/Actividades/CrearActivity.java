@@ -20,7 +20,7 @@ import com.example.trasstarea.Tareas;
 
 import java.util.Objects;
 
-public class CrearActivity extends AppCompatActivity
+public class CrearActivity extends BaseActivity
         implements Fragmento.FragmentoListener, Fragmento2.Fragmento2Listener{
 
     // ViewModel para almacenar temporalmente los datos de la tarea

@@ -2,31 +2,55 @@ package com.example.trasstarea.Actividades;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import com.example.trasstarea.R;
 
+import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.Toolbar;
 import androidx.preference.PreferenceFragmentCompat;
 
+import com.example.trasstarea.R;
+
 public class SettingsActivity extends BaseActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.preferencias);
+
+        //Toolbar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle("Preferencias");
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
+        //Cargar fragmento
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.settings, new SettingsFragment())
                     .commit();
         }
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+
+        // habilita la flecha atrás en la toolbar
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
-    public static class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish(); // vuelve atrás
+        return true;
+    }
+
+    public static class SettingsFragment extends PreferenceFragmentCompat
+            implements SharedPreferences.OnSharedPreferenceChangeListener {
+
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
@@ -47,25 +71,25 @@ public class SettingsActivity extends BaseActivity {
         }
 
         @Override
-        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, @Nullable String key) {
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
+                                              @Nullable String key) {
             if (key == null) return;
 
-            if (key.equals("switch_tema")) {
-                if (sharedPreferences.getBoolean("switch_tema", true)) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                } else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                }
-            } else if (key.equals("list_fuente")) {
-                if (getActivity() != null) {
-                    getActivity().recreate();
-                }
+            switch (key) {
+                case "switch_tema":
+                    AppCompatDelegate.setDefaultNightMode(
+                            sharedPreferences.getBoolean(key, true)
+                                    ? AppCompatDelegate.MODE_NIGHT_NO
+                                    : AppCompatDelegate.MODE_NIGHT_YES
+                    );
+                    break;
+
+                case "list_fuente":
+                    if (getActivity() != null) {
+                        getActivity().recreate();
+                    }
+                    break;
             }
         }
-    }
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed(); // O finish();
-        return true;
     }
 }
