@@ -5,16 +5,21 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
 
 import com.example.trasstarea.Modelo.Tarea;
 import com.example.trasstarea.R;
 import com.example.trasstarea.Tareas;
 
+import java.io.File;
+
 public class EditarActivity extends BaseActivity {
+
     private int index; // posición de la tarea en la lista
     private Tarea tarea; // objeto Tarea a editar
 
@@ -41,6 +46,18 @@ public class EditarActivity extends BaseActivity {
         EditText etDescripcion = findViewById(R.id.etDescripcionEditar);
         Button btnGuardar = findViewById(R.id.btnSiguiente);
 
+        // TextViews de archivos
+        TextView txtDocumento = findViewById(R.id.txtDocumentoEditar);
+        TextView txtImagen = findViewById(R.id.txtImagenEditar);
+        TextView txtAudio = findViewById(R.id.txtAudioEditar);
+        TextView txtVideo = findViewById(R.id.txtVideoEditar);
+
+        // Botones borrar
+        ImageButton btnBorrarDocumento = findViewById(R.id.btnBorrarDocumento);
+        ImageButton btnBorrarImagen = findViewById(R.id.btnBorrarImagen);
+        ImageButton btnBorrarAudio = findViewById(R.id.btnBorrarAudio);
+        ImageButton btnBorrarVideo = findViewById(R.id.btnBorrarVideo);
+
         // mostrar los datos actuales de la tarea en los campos
         etTitulo.setText(tarea.getTitulo());
         etFechaCreacion.setText(tarea.getFechaCreacion());
@@ -66,16 +83,93 @@ public class EditarActivity extends BaseActivity {
             }
         }
 
+        // Mostrar nombres de archivos adjuntos (si existen)
+        actualizarNombresArchivos(txtDocumento, txtImagen, txtAudio, txtVideo);
+
+        // BOTONES BORRAR
+        btnBorrarDocumento.setOnClickListener(v -> borrarArchivoAdjunto(
+                tarea.getDocumento(),
+                () -> {
+                    tarea.setDocumento(null);
+                    txtDocumento.setText(getString(R.string.sinArchivo));
+                }
+        ));
+
+        btnBorrarImagen.setOnClickListener(v -> borrarArchivoAdjunto(
+                tarea.getImagen(),
+                () -> {
+                    tarea.setImagen(null);
+                    txtImagen.setText(getString(R.string.sinArchivo));
+                }
+        ));
+
+        btnBorrarAudio.setOnClickListener(v -> borrarArchivoAdjunto(
+                tarea.getAudio(),
+                () -> {
+                    tarea.setAudio(null);
+                    txtAudio.setText(getString(R.string.sinArchivo));
+                }
+        ));
+
+        btnBorrarVideo.setOnClickListener(v -> borrarArchivoAdjunto(
+                tarea.getVideo(),
+                () -> {
+                    tarea.setVideo(null);
+                    txtVideo.setText(getString(R.string.sinArchivo));
+                }
+        ));
+
         // al presionar guardar
         btnGuardar.setOnClickListener(v -> {
-            tarea.setTitulo(etTitulo.getText().toString()); // actualizar título
-            tarea.setFechaObjetivo(etFechaObjetivo.getText().toString()); // actualizar fecha objetivo
-            tarea.setDescripcion(etDescripcion.getText().toString()); // actualizar descripción
-            tarea.setPrioritaria(cbPrioritaria.isChecked()); // actualizar prioridad
-            tarea.setProgreso(valoresProgreso[spProgreso.getSelectedItemPosition()]); // actualizar progreso
+            tarea.setTitulo(etTitulo.getText().toString());
+            tarea.setFechaObjetivo(etFechaObjetivo.getText().toString());
+            tarea.setDescripcion(etDescripcion.getText().toString());
+            tarea.setPrioritaria(cbPrioritaria.isChecked());
+            tarea.setProgreso(valoresProgreso[spProgreso.getSelectedItemPosition()]);
 
-            Toast.makeText(this, getString(R.string.actualizada), Toast.LENGTH_SHORT).show(); // mostrar mensaje
-            finish(); // cerrar actividad y volver
+            Toast.makeText(this, getString(R.string.actualizada), Toast.LENGTH_SHORT).show();
+            finish();
         });
+    }
+
+    // Método para mostrar nombres de archivos
+    private void actualizarNombresArchivos(TextView doc, TextView img, TextView aud, TextView vid) {
+        if (tarea.getDocumento() != null)
+            doc.setText(new File(tarea.getDocumento().getPath()).getName());
+        else doc.setText(getString(R.string.sinArchivo));
+
+        if (tarea.getImagen() != null)
+            img.setText(new File(tarea.getImagen().getPath()).getName());
+        else img.setText(getString(R.string.sinArchivo));
+
+        if (tarea.getAudio() != null)
+            aud.setText(new File(tarea.getAudio().getPath()).getName());
+        else aud.setText(getString(R.string.sinArchivo));
+
+        if (tarea.getVideo() != null)
+            vid.setText(new File(tarea.getVideo().getPath()).getName());
+        else vid.setText(getString(R.string.sinArchivo));
+    }
+
+    // Método para borrar archivo físico y actualizar UI
+    private void borrarArchivoAdjunto(android.net.Uri uri, Runnable onSuccess) {
+        if (uri == null) {
+            Toast.makeText(this, getString(R.string.sinArchivo), Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.confirmarBorrar))
+                .setMessage(getString(R.string.confirmarBorrarMensaje))
+                .setPositiveButton("Borrar", (dialog, which) -> {
+                    File f = new File(uri.getPath());
+                    if (f.exists()) f.delete(); // borra el archivo físico
+
+                    onSuccess.run(); // actualiza la tarea y UI
+
+                    Toast.makeText(this, getString(R.string.archivoBorrado), Toast.LENGTH_SHORT).show();
+                })
+                .setNegativeButton("Cancelar", null)
+                .show();
     }
 }

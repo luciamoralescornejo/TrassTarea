@@ -46,8 +46,14 @@
     <string name="Nueva">Nueva</string>
     <string name="Preferencias">Preferencias</string>
 
+
+    <string name="confirmarBorrar">Confirmar borrado</string>
+    <string name="confirmarBorrarMensaje">¿Quieres borrar este archivo?</string>
+    <string name="archivoBorrado">Archivo borrado</string>
     <string name="sinArchivo">Sin archivo</string>
+
     <string name="Detalle">Detalle</string>
+    <string name="archivosAdjuntos">Archivos adjuntos</string>
 
 
     <!-- Strings para llenar el spinner -->
