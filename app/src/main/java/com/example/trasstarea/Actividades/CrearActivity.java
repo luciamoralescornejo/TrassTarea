@@ -1,5 +1,6 @@
 package com.example.trasstarea.Actividades;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -38,7 +39,7 @@ public class CrearActivity extends BaseActivity
     private void cargarFragmentoDos() {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.contenedorFragmento, new Fragmento2())
-                .addToBackStack(null) // 👈 AQUÍ SÍ
+                .addToBackStack(null)
                 .commit();
     }
 
@@ -68,7 +69,13 @@ public class CrearActivity extends BaseActivity
                 Objects.requireNonNullElse(viewModel.fechaObjetivo.getValue(), ""),
                 Objects.requireNonNullElse(viewModel.progreso.getValue(), 0),
                 Objects.requireNonNullElse(viewModel.prioritaria.getValue(), false),
-                Objects.requireNonNullElse(viewModel.descripcion.getValue(), "")
+                Objects.requireNonNullElse(viewModel.descripcion.getValue(), ""),
+
+                // AÑADIMOS URIs (si son null, se pasan como null)
+                viewModel.uriDocumento.getValue(),
+                viewModel.uriImagen.getValue(),
+                viewModel.uriAudio.getValue(),
+                viewModel.uriVideo.getValue()
         );
 
         Tareas.listaTareas.add(tarea);
@@ -87,4 +94,22 @@ public class CrearActivity extends BaseActivity
         }
     }
 
+    // 🔹 NUEVO MÉTODO (ARCHIVOS)
+    @Override
+    public void onArchivoSeleccionado(Uri uri, int tipo) {
+        switch (tipo) {
+            case 1:
+                viewModel.uriDocumento.setValue(uri);
+                break;
+            case 2:
+                viewModel.uriImagen.setValue(uri);
+                break;
+            case 3:
+                viewModel.uriAudio.setValue(uri);
+                break;
+            case 4:
+                viewModel.uriVideo.setValue(uri);
+                break;
+        }
+    }
 }
