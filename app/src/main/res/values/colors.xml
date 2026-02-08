@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Colores base -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="amarilloPastel">#fff3c8</color>
+    <color name="maquillaje">#e2a47c</color>
+    <color name="amarillo">#e6bf50</color>
+
+    <!-- Tonos oscuros basados en tus colores -->
+    <color name="amarilloPastelOscuro">#3b2a1a</color>
+    <color name="maquillajeOscuro">#6f4a37</color>
+    <color name="amarilloOscuro">#8f7a2b</color>
+
+    <!-- Colores base para fondo y texto -->
+    <color name="background_dark">#2B1F1A</color>
+    <color name="surface_dark">#3A2A22</color>
+    <color name="text_dark">#FFFFFF</color>
+</resources>

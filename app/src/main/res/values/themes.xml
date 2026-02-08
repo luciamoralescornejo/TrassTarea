@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.Trasstarea" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
+        <!-- Color principal -->
+        <item name="colorPrimary">@color/maquillaje</item>
+        <item name="colorPrimaryVariant">@color/maquillaje</item>
+        <item name="colorSecondary">@color/maquillaje</item>
+
+        <!-- Para Preferences (muy importante) -->
+        <item name="colorAccent">@color/maquillaje</item>
+
+        <!-- Toolbar / menú -->
+        <item name="colorPrimary">@color/maquillaje</item>
+        <item name="colorOnPrimary">@color/black</item>
+
+    </style>
+
+</resources>

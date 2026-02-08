@@ -1,0 +1,57 @@
+<resources>
+    <!-- Strings para los textos de la app -->
+    <string name="app_name">TrassTarea</string>
+    <string name="texto">Tus tareas, tu ritmo, tu éxito.</string>
+    <string name="btn_empezar" />
+    <string name="btn_inicio">EMPEZAR</string>
+    <string name="txt_fecha">dd/mm/aaaa</string>
+    <string name="txt_quedan">Quedan:</string>
+    <string name="txt_00">00</string>
+    <string name="txt_dias">días</string>
+    <string name="CrearTarea">CREAR NUEVA TAREA</string>
+    <string name="Titulo">Título de la tarea</string>
+    <string name="FechaCreacion">Fecha de creación</string>
+    <string name="FechaObjetivo">Fecha objetivo</string>
+    <string name="Prioritaria">Prioritaria</string>
+    <string name="Descripcion">Descripción</string>
+    <string name="Siguiente">SIGUIENTE</string>
+    <string name="Volver">VOLVER</string>
+    <string name="Guardar">GUARDAR</string>
+    <string name="ListadoTareas">Listado de tareas</string>
+    <string name="AcercaDe">Acerda de</string>
+    <string name="Añadir">Añadir</string>
+    <string name="Salir">Salir</string>
+    <string name="aceptar">Aceptar</string>
+
+    <!-- Strings para los toast -->
+    <string name="guardadaConExito" >Tarea guardada con éxito.</string>
+    <string name="actualizada">Tarea actualizada con éxito.</string>
+    <string name="prioritarias">Mostrando solo tareas prioritarias.</string>
+    <string name="todas">Mostrando todas las tareas</string>
+    <string name="tituloVacio">"El título está vacío."</string>
+    <string name="fechaCreacionVacia">La fecha de creación está vacía.</string>
+    <string name="fechaObjetivoVacia">La fecha objetivo está vacía.</string>
+    <string name="descripcionVacia">La descripción está vacía</string>
+    <string name="cambiarIdioma">CAMBIAR IDIOMA DE LA APP</string>
+    <string name="Informacion">Deje pulsado sobre la tarea para editarla o eliminarla</string>
+
+    <!-- Strings para la opción del acerca de -->
+    <string name="acercaDe">
+    Aplicación: TrassTarea\nCentro: IES Trassierra\nAutor: Lucía Morales Cornejo\nAño: 2025
+    </string>
+
+    <!-- Strings para los botones del main -->
+    <string name="Ingles">EN</string>
+    <string name="Espanol">ES</string>
+    <string name="Nueva">Nueva</string>
+    <string name="Preferencias">Preferencias</string>
+
+    <!-- Strings para llenar el spinner -->
+    <string-array name="spinnerOpciones">
+        <item>No iniciada</item>
+        <item>Iniciada</item>
+        <item>Avanzada</item>
+        <item>Casi finalizada</item>
+        <item>Finalizada</item>
+    </string-array>
+</resources>

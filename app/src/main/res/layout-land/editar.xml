@@ -1,0 +1,80 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="30dp"
+    android:layout_marginTop="50dp"
+    android:layout_marginRight="30dp"
+    android:layout_marginBottom="50dp"
+    android:orientation="horizontal">
+
+    <!-- Columna izquierda -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginEnd="10dp">
+
+        <EditText
+            android:id="@+id/etTituloEditar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:hint="@string/Titulo" />
+
+        <EditText
+            android:id="@+id/etFechaCreacionEditar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:layout_marginBottom="10dp"
+            android:hint="@string/FechaCreacion" />
+
+        <EditText
+            android:id="@+id/etFechaObjetivoEditar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:hint="@string/FechaObjetivo" />
+
+    </LinearLayout>
+
+    <!-- Columna derecha -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginStart="10dp">
+
+        <Spinner
+            android:id="@+id/spProgresoEditar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"/>
+
+        <CheckBox
+            android:id="@+id/cbPrioritariaEditar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="@string/Prioritaria" />
+
+        <EditText
+            android:id="@+id/etDescripcionEditar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:hint="@string/Descripcion" />
+
+        <Button
+            android:id="@+id/btnSiguiente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/maquillaje"
+            android:text="@string/Guardar"
+            android:textColor="@color/black"
+            android:layout_gravity="center_horizontal"/>
+    </LinearLayout>
+
+</LinearLayout>

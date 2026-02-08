@@ -1,0 +1,57 @@
+<resources>
+    <!-- Strings para los textos de la app -->
+    <string name="app_name">TrassTarea</string>
+    <string name="texto">Your tasks, your pace, your success.</string>
+    <string name="btn_empezar" />
+    <string name="btn_inicio">START</string>
+    <string name="txt_fecha">dd/mm/yyyy</string>
+    <string name="txt_quedan">Remaining:</string>
+    <string name="txt_00">00</string>
+    <string name="txt_dias">days</string>
+    <string name="CrearTarea">CREATE NEW TASK</string>
+    <string name="Titulo">Task title</string>
+    <string name="FechaCreacion">Creation date</string>
+    <string name="FechaObjetivo">Target date</string>
+    <string name="Prioritaria">Priority</string>
+    <string name="Descripcion">Description</string>
+    <string name="Siguiente">NEXT</string>
+    <string name="Volver">BACK</string>
+    <string name="Guardar">SAVE</string>
+    <string name="ListadoTareas">Task list</string>
+    <string name="AcercaDe">About</string>
+    <string name="Añadir">Add</string>
+    <string name="Salir">Exit</string>
+    <string name="aceptar">Accept</string>
+
+    <!-- Strings para los toast -->
+    <string name="guardadaConExito">Task saved successfully.</string>
+    <string name="actualizada">Task updated successfully.</string>
+    <string name="prioritarias">Showing only priority tasks.</string>
+    <string name="todas">Showing all tasks.</string>
+    <string name="tituloVacio">"The title is empty."</string>
+    <string name="fechaCreacionVacia">The creation date is empty.</string>
+    <string name="fechaObjetivoVacia">The target date is empty.</string>
+    <string name="descripcionVacia">The description is empty.</string>
+    <string name="cambiarIdioma">CHANGE APP LANGUAGE</string>
+    <string name="Informacion">Long press on the task to edit or delete it</string>
+
+
+    <!-- Strings para la opción del acerca de -->
+    <string name="acercaDe">
+    Application: TrassTarea\nCenter: IES Trassierra\nAuthor: Lucía Morales Cornejo\nYear: 2025
+    </string>
+
+    <!-- Strings para los botones de idiomas -->
+    <string name="Ingles">EN</string>
+    <string name="Espanol">ES</string>
+    <string name="Nueva">New</string>
+
+    <!-- Strings para llenar el spinner -->
+    <string-array name="spinnerOpciones">
+        <item>Not started</item>
+        <item>Started</item>
+        <item>In progress</item>
+        <item>Almost finished</item>
+        <item>Completed</item>
+    </string-array>
+</resources>

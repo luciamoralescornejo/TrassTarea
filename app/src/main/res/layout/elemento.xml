@@ -1,0 +1,101 @@
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="6dp"
+    app:cardBackgroundColor="?attr/colorSurface">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/colorSurface"
+        android:backgroundTint="@color/amarillo"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/txtTitulo"
+            android:layout_width="321dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="32dp"
+            android:text="@string/Titulo"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/progress"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="175dp"
+            android:layout_height="18dp"
+            android:layout_marginTop="8dp"
+            android:progressBackgroundTint="?attr/colorOnSurface"
+            android:progressTint="@color/maquillajeOscuro"
+            app:layout_constraintEnd_toStartOf="@+id/txtFecha"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtTitulo" />
+
+        <TextView
+            android:id="@+id/txtFecha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@string/txt_fecha"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="@id/progress"
+            app:layout_constraintStart_toEndOf="@id/progress"
+            app:layout_constraintTop_toTopOf="@id/progress" />
+
+        <TextView
+            android:id="@+id/txtQuedan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@string/txt_quedan"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="@id/progress"
+            app:layout_constraintEnd_toStartOf="@id/txtDias"
+            app:layout_constraintStart_toEndOf="@id/txtFecha"
+            app:layout_constraintTop_toTopOf="@id/progress" />
+
+        <TextView
+            android:id="@+id/txtDias"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@string/txt_00"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="@id/progress"
+            app:layout_constraintStart_toEndOf="@id/txtQuedan"
+            app:layout_constraintTop_toTopOf="@id/progress" />
+
+        <TextView
+            android:id="@+id/txtdias"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_dias"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="@id/progress"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/txtDias"
+            app:layout_constraintTop_toTopOf="@id/progress" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="35dp"
+            android:layout_height="20dp"
+            android:src="@drawable/estrella"
+            app:layout_constraintBottom_toBottomOf="@id/txtTitulo"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
