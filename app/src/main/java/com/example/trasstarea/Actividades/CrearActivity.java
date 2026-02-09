@@ -72,7 +72,6 @@ public class CrearActivity extends BaseActivity
                 Objects.requireNonNullElse(viewModel.prioritaria.getValue(), false),
                 Objects.requireNonNullElse(viewModel.descripcion.getValue(), ""),
 
-                // AÑADIMOS URIs (si son null, se pasan como null)
                 viewModel.uriDocumento.getValue(),
                 viewModel.uriImagen.getValue(),
                 viewModel.uriAudio.getValue(),
@@ -94,6 +93,7 @@ public class CrearActivity extends BaseActivity
             finish();
         }
     }
+
     @Override
     public void onArchivoSeleccionado(Uri uri, int tipo) {
 
@@ -105,7 +105,8 @@ public class CrearActivity extends BaseActivity
                 nombre = "documento_" + System.currentTimeMillis();
                 archivo = guardarArchivo(uri, nombre);
                 if (archivo != null) {
-                    viewModel.uriDocumento.setValue(Uri.fromFile(archivo));
+                    // GUARDA STRING del Uri
+                    viewModel.uriDocumento.setValue(Uri.fromFile(archivo).toString());
                 }
                 break;
 
@@ -113,7 +114,7 @@ public class CrearActivity extends BaseActivity
                 nombre = "imagen_" + System.currentTimeMillis();
                 archivo = guardarArchivo(uri, nombre);
                 if (archivo != null) {
-                    viewModel.uriImagen.setValue(Uri.fromFile(archivo));
+                    viewModel.uriImagen.setValue(Uri.fromFile(archivo).toString());
                 }
                 break;
 
@@ -121,7 +122,7 @@ public class CrearActivity extends BaseActivity
                 nombre = "audio_" + System.currentTimeMillis();
                 archivo = guardarArchivo(uri, nombre);
                 if (archivo != null) {
-                    viewModel.uriAudio.setValue(Uri.fromFile(archivo));
+                    viewModel.uriAudio.setValue(Uri.fromFile(archivo).toString());
                 }
                 break;
 
@@ -129,7 +130,7 @@ public class CrearActivity extends BaseActivity
                 nombre = "video_" + System.currentTimeMillis();
                 archivo = guardarArchivo(uri, nombre);
                 if (archivo != null) {
-                    viewModel.uriVideo.setValue(Uri.fromFile(archivo));
+                    viewModel.uriVideo.setValue(Uri.fromFile(archivo).toString());
                 }
                 break;
         }

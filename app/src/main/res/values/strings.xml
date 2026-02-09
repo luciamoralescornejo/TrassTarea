@@ -54,6 +54,11 @@
 
     <string name="Detalle">Detalle</string>
     <string name="archivosAdjuntos">Archivos adjuntos</string>
+    <string name="Editar">Editar</string>
+    <string name="Estadísticas">Estadísticas</string>
+
+    <string name="sinDato">No disponible</string>
+
 
 
     <!-- Strings para llenar el spinner -->

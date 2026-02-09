@@ -1,37 +1,54 @@
 package com.example.trasstarea.Modelo;
 
-import android.net.Uri;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+@Entity(tableName = "tareas")
 public class Tarea {
 
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+
+    @ColumnInfo(name = "titulo")
     private String titulo;
+
+    // NO usar defaultValue con String para fechas en Room
+    @ColumnInfo(name = "fecha_creacion")
     private String fechaCreacion;
+
+    @ColumnInfo(name = "fecha_objetivo")
     private String fechaObjetivo;
+
+    @ColumnInfo(name = "progreso")
     private int progreso;
+
+    @ColumnInfo(name = "prioritaria")
     private boolean prioritaria;
+
+    @ColumnInfo(name = "descripcion")
     private String descripcion;
 
-    // NUEVOS campos para archivos
-    private Uri documento;
-    private Uri imagen;
-    private Uri audio;
-    private Uri video;
+    @ColumnInfo(name = "url_doc")
+    private String documento;
 
-    // Constructor original
-    public Tarea(String titulo, String fechaCreacion, String fechaObjetivo, int progreso,
-                 boolean prioritaria, String descripcion) {
-        this.titulo = titulo;
-        this.fechaCreacion = fechaCreacion;
-        this.fechaObjetivo = fechaObjetivo;
-        this.progreso = progreso;
-        this.prioritaria = prioritaria;
-        this.descripcion = descripcion;
+    @ColumnInfo(name = "url_img")
+    private String imagen;
+
+    @ColumnInfo(name = "url_aud")
+    private String audio;
+
+    @ColumnInfo(name = "url_vid")
+    private String video;
+
+    // Constructor vacío requerido por Room
+    public Tarea() {
     }
 
-    // Constructor nuevo con archivos
+    // Constructor completo
     public Tarea(String titulo, String fechaCreacion, String fechaObjetivo, int progreso,
                  boolean prioritaria, String descripcion,
-                 Uri documento, Uri imagen, Uri audio, Uri video) {
+                 String documento, String imagen, String audio, String video) {
 
         this.titulo = titulo;
         this.fechaCreacion = fechaCreacion;
@@ -45,7 +62,15 @@ public class Tarea {
         this.video = video;
     }
 
-    // Getters y Setters
+    // GETTERS y SETTERS
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getTitulo() {
         return titulo;
     }
@@ -94,35 +119,53 @@ public class Tarea {
         this.descripcion = descripcion;
     }
 
-    public Uri getDocumento() {
+    public String getDocumento() {
         return documento;
     }
 
-    public void setDocumento(Uri documento) {
+    public void setDocumento(String documento) {
         this.documento = documento;
     }
 
-    public Uri getImagen() {
+    public String getImagen() {
         return imagen;
     }
 
-    public void setImagen(Uri imagen) {
+    public void setImagen(String imagen) {
         this.imagen = imagen;
     }
 
-    public Uri getAudio() {
+    public String getAudio() {
         return audio;
     }
 
-    public void setAudio(Uri audio) {
+    public void setAudio(String audio) {
         this.audio = audio;
     }
 
-    public Uri getVideo() {
+    public String getVideo() {
         return video;
     }
 
-    public void setVideo(Uri video) {
+    public void setVideo(String video) {
         this.video = video;
+    }
+
+    // Útil para debugging
+    @Override
+    public String toString() {
+        return "Tarea{" +
+                "id=" + id +
+                ", titulo='" + titulo + '\'' +
+                ", fechaCreacion='" + fechaCreacion + '\'' +
+                ", fechaObjetivo='" + fechaObjetivo + '\'' +
+                ", progreso=" + progreso +
+                ", prioritaria=" + prioritaria +
+                ", descripcion='" + descripcion + '\'' +
+                ", documento='" + documento + '\'' +
+                ", imagen='" + imagen + '\'' +
+                ", audio='" + audio + '\'' +
+                ", video='" + video + '\'' +
+                '}';
     }
 }

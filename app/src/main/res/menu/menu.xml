@@ -33,6 +33,11 @@
             android:title="@string/AcercaDe"
             app:showAsAction="never" />
         <item
+            android:id="@+id/it_estadísticas"
+            android:orderInCategory="410"
+            android:title="@string/Estadísticas"
+            app:showAsAction="never" />
+        <item
             android:id="@+id/it_salir"
             android:orderInCategory="420"
             android:title="@string/Salir"

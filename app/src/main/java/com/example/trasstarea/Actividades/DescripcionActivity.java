@@ -50,7 +50,7 @@ public class DescripcionActivity extends BaseActivity {
         // Documento
         if (tarea.getDocumento() != null) {
             txtDocumento.setText(
-                    new File(tarea.getDocumento().getPath()).getName()
+                    new File(tarea.getDocumento()).getName()
             );
         } else {
             txtDocumento.setText(getString(R.string.sinArchivo));
@@ -59,7 +59,7 @@ public class DescripcionActivity extends BaseActivity {
         // Imagen
         if (tarea.getImagen() != null) {
             txtImagen.setText(
-                    new File(tarea.getImagen().getPath()).getName()
+                    new File(tarea.getImagen()).getName()
             );
         } else {
             txtImagen.setText(getString(R.string.sinArchivo));
@@ -68,7 +68,7 @@ public class DescripcionActivity extends BaseActivity {
         // Audio
         if (tarea.getAudio() != null) {
             txtAudio.setText(
-                    new File(tarea.getAudio().getPath()).getName()
+                    new File(tarea.getAudio()).getName()
             );
         } else {
             txtAudio.setText(getString(R.string.sinArchivo));
@@ -77,7 +77,7 @@ public class DescripcionActivity extends BaseActivity {
         // Vídeo
         if (tarea.getVideo() != null) {
             txtVideo.setText(
-                    new File(tarea.getVideo().getPath()).getName()
+                    new File(tarea.getVideo()).getName()
             );
         } else {
             txtVideo.setText(getString(R.string.sinArchivo));

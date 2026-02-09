@@ -55,6 +55,9 @@
 
     <string name="Detalle">Detail</string>
     <string name="archivosAdjuntos">Attached files</string>
+    <string name="Editar">Edit</string>
+
+    <string name="sinDato">Not available</string>
 
     <!-- Strings para llenar el spinner -->
     <string-array name="spinnerOpciones">

@@ -1,181 +1,209 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:fitsSystemWindows="true">
 
-    <LinearLayout
+    <!-- TOOLBAR -->
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:fitsSystemWindows="true">
 
-        <EditText
-            android:id="@+id/etTituloEditar"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarEditar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:hint="@string/Titulo" />
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:elevation="4dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            app:title="@string/Editar"
+            app:titleTextColor="@android:color/white" />
 
-        <EditText
-            android:id="@+id/etFechaCreacionEditar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:enabled="false"
-            android:layout_marginBottom="10dp"
-            android:hint="@string/FechaCreacion" />
+    </com.google.android.material.appbar.AppBarLayout>
 
-        <EditText
-            android:id="@+id/etFechaObjetivoEditar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:hint="@string/FechaObjetivo" />
+    <!-- CONTENIDO -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <Spinner
-            android:id="@+id/spProgresoEditar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"/>
-
-        <CheckBox
-            android:id="@+id/cbPrioritariaEditar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:text="@string/Prioritaria" />
-
-        <EditText
-            android:id="@+id/etDescripcionEditar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:hint="@string/Descripcion" />
-
-        <!-- BOTÓN GUARDAR -->
-        <Button
-            android:id="@+id/btnSiguiente"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/maquillaje"
-            android:text="@string/Guardar"
-            android:textColor="@color/black"
-            android:layout_gravity="center_horizontal"/>
-
-        <!-- SECCIÓN DE ARCHIVOS ADJUNTOS -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/archivosAdjuntos"
-            android:textStyle="bold" />
-
-        <!-- DOCUMENTO -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="8dp">
+            android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@drawable/documento" />
-
-            <TextView
-                android:id="@+id/txtDocumentoEditar"
-                android:layout_width="0dp"
+            <EditText
+                android:id="@+id/etTituloEditar"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingStart="12dp"/>
+                android:layout_marginBottom="10dp"
+                android:hint="@string/Titulo" />
 
-            <ImageButton
-                android:id="@+id/btnBorrarDocumento"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@drawable/borrar"
-                android:background="@null"/>
-        </LinearLayout>
-
-        <!-- IMAGEN -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="8dp">
-
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@drawable/imagen" />
-
-            <TextView
-                android:id="@+id/txtImagenEditar"
-                android:layout_width="0dp"
+            <EditText
+                android:id="@+id/etFechaCreacionEditar"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingStart="12dp"/>
+                android:enabled="false"
+                android:layout_marginBottom="10dp"
+                android:hint="@string/FechaCreacion" />
 
-            <ImageButton
-                android:id="@+id/btnBorrarImagen"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@drawable/borrar"
-                android:background="@null"/>
-        </LinearLayout>
-
-        <!-- AUDIO -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="8dp">
-
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@drawable/audio" />
-
-            <TextView
-                android:id="@+id/txtAudioEditar"
-                android:layout_width="0dp"
+            <EditText
+                android:id="@+id/etFechaObjetivoEditar"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingStart="12dp"/>
+                android:layout_marginBottom="10dp"
+                android:hint="@string/FechaObjetivo" />
 
-            <ImageButton
-                android:id="@+id/btnBorrarAudio"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@drawable/borrar"
-                android:background="@null"/>
-        </LinearLayout>
-
-        <!-- VIDEO -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="8dp">
-
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@drawable/video" />
-
-            <TextView
-                android:id="@+id/txtVideoEditar"
-                android:layout_width="0dp"
+            <Spinner
+                android:id="@+id/spProgresoEditar"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingStart="12dp"/>
+                android:layout_marginBottom="10dp"/>
 
-            <ImageButton
-                android:id="@+id/btnBorrarVideo"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@drawable/borrar"
-                android:background="@null"/>
+            <CheckBox
+                android:id="@+id/cbPrioritariaEditar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="@string/Prioritaria" />
+
+            <EditText
+                android:id="@+id/etDescripcionEditar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:hint="@string/Descripcion" />
+
+            <Button
+                android:id="@+id/btnSiguiente"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/maquillaje"
+                android:text="@string/Guardar"
+                android:textColor="@color/black"
+                android:layout_gravity="center_horizontal"/>
+
+            <!-- SECCIÓN DE ARCHIVOS ADJUNTOS -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/archivosAdjuntos"
+                android:textStyle="bold" />
+
+            <!-- DOCUMENTO -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/documento" />
+
+                <TextView
+                    android:id="@+id/txtDocumentoEditar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingStart="12dp"/>
+
+                <ImageButton
+                    android:id="@+id/btnBorrarDocumento"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/borrar"
+                    android:background="@null"/>
+            </LinearLayout>
+
+            <!-- IMAGEN -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/imagen" />
+
+                <TextView
+                    android:id="@+id/txtImagenEditar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingStart="12dp"/>
+
+                <ImageButton
+                    android:id="@+id/btnBorrarImagen"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/borrar"
+                    android:background="@null"/>
+            </LinearLayout>
+
+            <!-- AUDIO -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/audio" />
+
+                <TextView
+                    android:id="@+id/txtAudioEditar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingStart="12dp"/>
+
+                <ImageButton
+                    android:id="@+id/btnBorrarAudio"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/borrar"
+                    android:background="@null"/>
+            </LinearLayout>
+
+            <!-- VIDEO -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/video" />
+
+                <TextView
+                    android:id="@+id/txtVideoEditar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingStart="12dp"/>
+
+                <ImageButton
+                    android:id="@+id/btnBorrarVideo"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/borrar"
+                    android:background="@null"/>
+            </LinearLayout>
+
         </LinearLayout>
-
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
