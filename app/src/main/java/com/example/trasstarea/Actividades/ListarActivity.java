@@ -9,23 +9,27 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.trasstarea.Adapter;
+import com.example.trasstarea.Modelo.AppDatabase;
 import com.example.trasstarea.Modelo.Tarea;
+import com.example.trasstarea.Modelo.TareaDao;
 import com.example.trasstarea.R;
-import com.example.trasstarea.Tareas;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Executors;
 
 public class ListarActivity extends BaseActivity {
 
     private RecyclerView recyclerView;
     private Adapter adaptador;
     private boolean prioritaria = false;
+
+    private TareaDao tareaDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,13 +40,20 @@ public class ListarActivity extends BaseActivity {
         Toolbar toolbar = findViewById(R.id.toolbarListado);
         setSupportActionBar(toolbar);
 
+        tareaDao = AppDatabase.getInstance(this).tareaDao();
+
         recyclerView = findViewById(R.id.rvTareas);
-        adaptador = new Adapter(new ArrayList<>(Tareas.listaTareas));
+        adaptador = new Adapter(new ArrayList<>(), this, () -> actualizarLista());
         recyclerView.setAdapter(adaptador);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+
+        // Cargar datos iniciales
+        actualizarLista();
     }
 
     @Override
@@ -58,16 +69,22 @@ public class ListarActivity extends BaseActivity {
     }
 
     private void actualizarLista() {
-        ArrayList<Tarea> listaAMostrar;
-        if (prioritaria) {
-            listaAMostrar = new ArrayList<>();
-            for (Tarea t : Tareas.listaTareas) {
-                if (t.isPrioritaria()) listaAMostrar.add(t);
+        Executors.newSingleThreadExecutor().execute(() -> {
+
+            List<Tarea> lista = tareaDao.obtenerTodas();
+
+            // Filtrar prioritarias si toca
+            ArrayList<Tarea> listaAMostrar = new ArrayList<>();
+            if (prioritaria) {
+                for (Tarea t : lista) {
+                    if (t.isPrioritaria()) listaAMostrar.add(t);
+                }
+            } else {
+                listaAMostrar.addAll(lista);
             }
-        } else {
-            listaAMostrar = new ArrayList<>(Tareas.listaTareas);
-        }
-        adaptador.actualizarDatos(listaAMostrar);
+
+            runOnUiThread(() -> adaptador.actualizarDatos(listaAMostrar));
+        });
     }
 
     private void abrirCrearTarea() {
@@ -96,7 +113,6 @@ public class ListarActivity extends BaseActivity {
         } else if (id == R.id.it_acercade) {
             mostrarAcercaDe();
         } else if (id == R.id.it_estadísticas) {
-            // NUEVO: abrir pantalla Estadísticas
             startActivity(new Intent(this, EstadisticasActivity.class));
         } else if (id == R.id.it_salir) {
             finishAffinity();

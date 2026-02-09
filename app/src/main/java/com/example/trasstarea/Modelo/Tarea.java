@@ -13,7 +13,6 @@ public class Tarea {
     @ColumnInfo(name = "titulo")
     private String titulo;
 
-    // NO usar defaultValue con String para fechas en Room
     @ColumnInfo(name = "fecha_creacion")
     private String fechaCreacion;
 

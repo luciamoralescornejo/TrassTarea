@@ -43,7 +43,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingStart="12dp"
-                    android:text="Promedio de progreso: "
+                    android:text="@string/Promedio"
                     android:textSize="18sp" />
             </LinearLayout>
 
@@ -64,7 +64,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingStart="12dp"
-                    android:text="Tareas completadas: "
+                    android:text="@string/Completadas"
                     android:textSize="18sp" />
             </LinearLayout>
 
@@ -85,7 +85,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingStart="12dp"
-                    android:text="Tareas incompletas: "
+                    android:text="@string/Incompletas"
                     android:textSize="18sp" />
             </LinearLayout>
 
@@ -106,7 +106,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingStart="12dp"
-                    android:text="Tareas prioritarias: "
+                    android:text="@string/Prioritarias"
                     android:textSize="18sp" />
             </LinearLayout>
 
@@ -127,7 +127,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingStart="12dp"
-                    android:text="Fecha objetivo promedio: "
+                    android:text="@string/FechaObjetivoPromedio"
                     android:textSize="18sp" />
             </LinearLayout>
 

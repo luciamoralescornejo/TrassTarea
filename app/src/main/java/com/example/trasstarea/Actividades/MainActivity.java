@@ -24,8 +24,7 @@ public class MainActivity extends BaseActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main); // 1. Se carga el layout primero
 
-        // --- SOLUCIÓN AQUÍ ---
-        // 2. Llamamos al método de la clase padre para configurar los botones de idioma
+        // llamamos al metodo de la clase padre para configurar los botones de idioma
         // que están definidos en activity_main.xml
         configurarBotonesIdioma();
 
@@ -41,7 +40,7 @@ public class MainActivity extends BaseActivity {
         if (boton1 != null) {
             boton1.setOnClickListener(this::irAlListado);
         }
-    }
+}
 
     public void irAlListado(View view) {
         Intent intent = new Intent(this, ListarActivity.class);

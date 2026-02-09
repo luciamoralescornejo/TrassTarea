@@ -79,7 +79,7 @@ public class Fragmento2 extends Fragment {
         btnVideo.setOnClickListener(v -> abrirSelector("video/*", PICK_VIDEO));
     }
 
-    // Método para abrir selector de archivos
+    // metodo para abrir selector de archivos
     private void abrirSelector(String tipo, int requestCode) {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType(tipo);

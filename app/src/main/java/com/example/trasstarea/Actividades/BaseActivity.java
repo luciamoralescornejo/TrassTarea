@@ -49,13 +49,9 @@ public class BaseActivity extends AppCompatActivity {
         sd = prefs.getBoolean("checkbox_sd", false);
 
         super.onCreate(savedInstanceState);
-        // NOTA: No buscamos los botones aquí porque el layout aún no se ha inflado
     }
 
-    /**
-     * Método para inicializar los botones de idioma.
-     * Debe llamarse DESPUÉS de setContentView() en MainActivity.
-     */
+    //iniciar botones en el idioma
     protected void configurarBotonesIdioma() {
         btnEspanol = findViewById(R.id.btnEspanol);
         btnIngles = findViewById(R.id.btnIngles);
@@ -140,24 +136,6 @@ public class BaseActivity extends AppCompatActivity {
         Configuration configuracion = recursos.getConfiguration();
         configuracion.setLocale(locale);
         recursos.updateConfiguration(configuracion, recursos.getDisplayMetrics());
-    }
-
-    //metodo común para obtener el directorio de adjuntos
-    protected File getDirectorioAdjuntos() {
-        File baseDir;
-
-        if (sd && Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
-            baseDir = getExternalFilesDir(null); // SD / memoria externa
-        } else {
-            baseDir = getFilesDir(); // memoria interna
-        }
-
-        File adjuntos = new File(baseDir, "adjuntos");
-        if (!adjuntos.exists()) {
-            adjuntos.mkdirs();
-        }
-
-        return adjuntos;
     }
 
     protected File guardarArchivo(Uri uri, String nombreArchivo) {

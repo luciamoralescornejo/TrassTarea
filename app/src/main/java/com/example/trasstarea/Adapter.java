@@ -1,8 +1,8 @@
 package com.example.trasstarea;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.trasstarea.Actividades.DescripcionActivity;
 import com.example.trasstarea.Actividades.EditarActivity;
+import com.example.trasstarea.Actividades.ListarActivity;
+import com.example.trasstarea.Modelo.AppDatabase;
 import com.example.trasstarea.Modelo.Tarea;
 
 import java.time.LocalDate;
@@ -23,42 +25,51 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.TareaViewHolder> {
-    private ArrayList<Tarea> datos; // lista de tareas
 
-    public Adapter(ArrayList<Tarea> datosTarea) {
-        this.datos = datosTarea; // guardar lista inicial
+    private ArrayList<Tarea> datos;
+    private Context context;
+    private OnTareaChangedListener listener;
+
+    public Adapter(ArrayList<Tarea> datosTarea, Context ctx, OnTareaChangedListener listener) {
+        this.datos = datosTarea;
+        this.context = ctx;
+        this.listener = listener;
     }
 
     @NonNull
     @Override
     public TareaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View item = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.elemento, parent, false); // inflar layout de cada item
+                .inflate(R.layout.elemento, parent, false);
         return new TareaViewHolder(item);
     }
 
     @Override
     public void onBindViewHolder(@NonNull TareaViewHolder holder, int position) {
-        holder.bindTarea(datos.get(position)); // asignar datos al item
+        holder.bindTarea(datos.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return datos.size(); // devolver cantidad de items
+        return datos.size();
     }
 
-    // actualizar lista y refrescar RecyclerView
     public void actualizarDatos(ArrayList<Tarea> nuevasTareas) {
         this.datos.clear();
         this.datos.addAll(nuevasTareas);
         notifyDataSetChanged();
     }
 
+    // INTERFAZ para comunicar cambios a la Activity
+    public interface OnTareaChangedListener {
+        void onTareaBorrada();
+    }
+
     public class TareaViewHolder extends RecyclerView.ViewHolder {
-        private TextView titulo; // título de la tarea
-        private ProgressBar progress; // barra de progreso
-        private TextView fecha; // fecha objetivo
-        private TextView cantidad; // días restantes
+        private TextView titulo;
+        private ProgressBar progress;
+        private TextView fecha;
+        private TextView cantidad;
 
         public TareaViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -83,39 +94,41 @@ public class Adapter extends RecyclerView.Adapter<Adapter.TareaViewHolder> {
                 cantidad.setText("-");
             }
 
-            // clic normal: abrir DescripcionActivity
             itemView.setOnClickListener(v -> {
-                Intent intent = new Intent(itemView.getContext(), DescripcionActivity.class);
-                intent.putExtra("posicion", getAdapterPosition());
-                itemView.getContext().startActivity(intent);
+                Intent intent = new Intent(context, DescripcionActivity.class);
+                intent.putExtra("tareaId", tarea.getId());
+                context.startActivity(intent);
             });
 
-            // clic largo: mostrar menú contextual (Editar / Borrar)
             itemView.setOnLongClickListener(v -> {
-                mostrarMenuContextual(itemView.getContext(), tarea);
+                mostrarMenuContextual(context, tarea);
                 return true;
             });
         }
 
-        // menú contextual para editar o borrar tarea
         private void mostrarMenuContextual(Context context, Tarea tarea) {
             CharSequence opciones[] = new CharSequence[] {"Editar", "Borrar"};
-            new AlertDialog.Builder(context)
+            new android.app.AlertDialog.Builder(context)
                     .setTitle(tarea.getTitulo())
                     .setItems(opciones, (dialog, which) -> {
-                        if (which == 0) { // editar tarea
+                        if (which == 0) {
                             Intent i = new Intent(context, EditarActivity.class);
-                            i.putExtra("tareaIndex", getAdapterPosition());
+                            i.putExtra("tareaId", tarea.getId());
                             context.startActivity(i);
-                        } else if (which == 1) { // borrar tarea
-                            new AlertDialog.Builder(context)
+                        } else {
+                            new android.app.AlertDialog.Builder(context)
                                     .setTitle("Borrar tarea")
                                     .setMessage("¿Seguro que quieres borrar \"" + tarea.getTitulo() + "\"?")
                                     .setPositiveButton("Borrar", (d, w) -> {
-                                        int pos = getAdapterPosition();
-                                        Tareas.listaTareas.remove(pos); // eliminar de la lista
-                                        actualizarDatos(new ArrayList<>(Tareas.listaTareas)); // actualizar RecyclerView
-                                        Toast.makeText(context, "Tarea borrada", Toast.LENGTH_SHORT).show();
+                                        new Thread(() -> {
+                                            AppDatabase db = AppDatabase.getInstance(context);
+                                            db.tareaDao().borrar(tarea);
+
+                                            // avisar a la Activity
+                                            if (listener != null) {
+                                                ((ListarActivity) context).runOnUiThread(listener::onTareaBorrada);
+                                            }
+                                        }).start();
                                     })
                                     .setNegativeButton("Cancelar", null)
                                     .show();

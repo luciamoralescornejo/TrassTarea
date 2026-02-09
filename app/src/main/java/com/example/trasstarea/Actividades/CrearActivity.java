@@ -8,18 +8,21 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.trasstarea.Fragmentos.Fragmento;
 import com.example.trasstarea.Fragmentos.Fragmento2;
+import com.example.trasstarea.Modelo.AppDatabase;
 import com.example.trasstarea.Modelo.Tarea;
+import com.example.trasstarea.Modelo.TareaDao;
 import com.example.trasstarea.R;
 import com.example.trasstarea.TareaViewModel;
-import com.example.trasstarea.Tareas;
 
 import java.io.File;
 import java.util.Objects;
+import java.util.concurrent.Executors;
 
 public class CrearActivity extends BaseActivity
         implements Fragmento.FragmentoListener, Fragmento2.Fragmento2Listener {
 
     private TareaViewModel viewModel;
+    private TareaDao tareaDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +31,10 @@ public class CrearActivity extends BaseActivity
 
         viewModel = new ViewModelProvider(this).get(TareaViewModel.class);
 
-        // 🔹 PRIMER FRAGMENTO (SIN BACKSTACK)
+        // DAO
+        tareaDao = AppDatabase.getInstance(this).tareaDao();
+
+        // PRIMER FRAGMENTO
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.contenedorFragmento, new Fragmento())
@@ -36,7 +42,7 @@ public class CrearActivity extends BaseActivity
         }
     }
 
-    // Carga el segundo fragmento
+    //carga el segundo fragmento
     private void cargarFragmentoDos() {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.contenedorFragmento, new Fragmento2())
@@ -78,7 +84,10 @@ public class CrearActivity extends BaseActivity
                 viewModel.uriVideo.getValue()
         );
 
-        Tareas.listaTareas.add(tarea);
+        // GUARDA EN ROOM
+        Executors.newSingleThreadExecutor().execute(() -> {
+            tareaDao.insertar(tarea);
+        });
 
         Toast.makeText(this, getString(R.string.guardadaConExito), Toast.LENGTH_LONG).show();
         finish();
@@ -105,7 +114,6 @@ public class CrearActivity extends BaseActivity
                 nombre = "documento_" + System.currentTimeMillis();
                 archivo = guardarArchivo(uri, nombre);
                 if (archivo != null) {
-                    // GUARDA STRING del Uri
                     viewModel.uriDocumento.setValue(Uri.fromFile(archivo).toString());
                 }
                 break;

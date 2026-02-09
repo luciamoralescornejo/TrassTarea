@@ -1,6 +1,5 @@
 package com.example.trasstarea.Modelo;
 
-import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -24,17 +23,11 @@ public interface TareaDao {
     @Query("SELECT * FROM tareas ORDER BY fecha_objetivo ASC")
     List<Tarea> obtenerTodas();
 
-    @Query("SELECT * FROM tareas WHERE prioritaria = 1 ORDER BY fecha_objetivo ASC")
-    List<Tarea> obtenerPrioritarias();
-
     @Query("SELECT * FROM tareas WHERE id = :id")
     Tarea obtenerPorId(int id);
 
     @Query("SELECT AVG(progreso) FROM tareas")
     Double getPromedioProgreso();
-
-    @Query("SELECT COUNT(*) FROM tareas")
-    Integer getTotalTareas();
 
     @Query("SELECT COUNT(*) FROM tareas WHERE progreso = 100")
     Integer getCompletadas();
@@ -44,8 +37,4 @@ public interface TareaDao {
 
     @Query("SELECT COUNT(*) FROM tareas WHERE prioritaria = 1")
     Integer getPrioritarias();
-
-    @Query("SELECT AVG(fecha_objetivo) FROM tareas")
-    Double getFechaObjetivoPromedio();
-
 }

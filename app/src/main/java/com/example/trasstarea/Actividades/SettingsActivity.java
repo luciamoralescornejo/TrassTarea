@@ -3,7 +3,6 @@ package com.example.trasstarea.Actividades;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatDelegate;

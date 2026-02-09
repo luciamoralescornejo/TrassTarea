@@ -16,42 +16,42 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.trasstarea.Modelo.AppDatabase;
 import com.example.trasstarea.Modelo.Tarea;
+import com.example.trasstarea.Modelo.TareaDao;
 import com.example.trasstarea.R;
-import com.example.trasstarea.Tareas;
 
 import java.io.File;
+import java.util.concurrent.Executors;
 
 public class EditarActivity extends BaseActivity {
 
-    private int index; // posición de la tarea en la lista
-    private Tarea tarea; // objeto Tarea a editar
+    private Tarea tarea;
+    private TareaDao tareaDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.editar); // carga el layout de edición
+        setContentView(R.layout.editar);
 
-        // TOOLBAR
         Toolbar toolbar = findViewById(R.id.toolbarEditar);
         setSupportActionBar(toolbar);
 
-        // mostrar flecha atrás
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
-        // obtener la posición de la tarea enviada desde la otra actividad
-        index = getIntent().getIntExtra("tareaIndex", -1);
-        if (index == -1) { // si no se envió posición válida
-            finish(); // cierra la actividad
+        tareaDao = AppDatabase.getInstance(this).tareaDao();
+
+        // ahora recibimos tareaId
+        int tareaId = getIntent().getIntExtra("tareaId", -1);
+        if (tareaId == -1) {
+            finish();
             return;
         }
 
-        tarea = Tareas.listaTareas.get(index); // obtiene la tarea a editar
-
-        // enlaza los elementos de la pantalla con variables
+        // VIEWS
         EditText etTitulo = findViewById(R.id.etTituloEditar);
         EditText etFechaCreacion = findViewById(R.id.etFechaCreacionEditar);
         EditText etFechaObjetivo = findViewById(R.id.etFechaObjetivoEditar);
@@ -60,45 +60,53 @@ public class EditarActivity extends BaseActivity {
         EditText etDescripcion = findViewById(R.id.etDescripcionEditar);
         Button btnGuardar = findViewById(R.id.btnSiguiente);
 
-        // TextViews de archivos
         TextView txtDocumento = findViewById(R.id.txtDocumentoEditar);
         TextView txtImagen = findViewById(R.id.txtImagenEditar);
         TextView txtAudio = findViewById(R.id.txtAudioEditar);
         TextView txtVideo = findViewById(R.id.txtVideoEditar);
 
-        // Botones borrar
         ImageButton btnBorrarDocumento = findViewById(R.id.btnBorrarDocumento);
         ImageButton btnBorrarImagen = findViewById(R.id.btnBorrarImagen);
         ImageButton btnBorrarAudio = findViewById(R.id.btnBorrarAudio);
         ImageButton btnBorrarVideo = findViewById(R.id.btnBorrarVideo);
 
-        // mostrar los datos actuales de la tarea en los campos
-        etTitulo.setText(tarea.getTitulo());
-        etFechaCreacion.setText(tarea.getFechaCreacion());
-        etFechaObjetivo.setText(tarea.getFechaObjetivo());
-        etDescripcion.setText(tarea.getDescripcion());
-        cbPrioritaria.setChecked(tarea.isPrioritaria());
-
-        // configurar spinner con opciones de progreso
+        // spinner
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 this,
-                R.array.spinnerOpciones, // opciones definidas en strings.xml
+                R.array.spinnerOpciones,
                 android.R.layout.simple_spinner_item
         );
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spProgreso.setAdapter(adapter);
 
-        // seleccionar el progreso actual en el spinner
         int[] valoresProgreso = {0, 25, 50, 75, 100};
-        for (int i = 0; i < valoresProgreso.length; i++) {
-            if (valoresProgreso[i] == tarea.getProgreso()) {
-                spProgreso.setSelection(i); // selecciona el valor actual
-                break;
-            }
-        }
 
-        // Mostrar nombres de archivos adjuntos (si existen)
-        actualizarNombresArchivos(txtDocumento, txtImagen, txtAudio, txtVideo);
+        // CARGAR LA TAREA DESDE ROOM
+        Executors.newSingleThreadExecutor().execute(() -> {
+            tarea = tareaDao.obtenerPorId(tareaId);
+
+            if (tarea == null) {
+                runOnUiThread(this::finish);
+                return;
+            }
+
+            runOnUiThread(() -> {
+                etTitulo.setText(tarea.getTitulo());
+                etFechaCreacion.setText(tarea.getFechaCreacion());
+                etFechaObjetivo.setText(tarea.getFechaObjetivo());
+                etDescripcion.setText(tarea.getDescripcion());
+                cbPrioritaria.setChecked(tarea.isPrioritaria());
+
+                for (int i = 0; i < valoresProgreso.length; i++) {
+                    if (valoresProgreso[i] == tarea.getProgreso()) {
+                        spProgreso.setSelection(i);
+                        break;
+                    }
+                }
+
+                actualizarNombresArchivos(txtDocumento, txtImagen, txtAudio, txtVideo);
+            });
+        });
 
         // BOTONES BORRAR
         btnBorrarDocumento.setOnClickListener(v -> borrarArchivoAdjunto(
@@ -133,30 +141,34 @@ public class EditarActivity extends BaseActivity {
                 }
         ));
 
-        // al presionar guardar
+        // GUARDAR
         btnGuardar.setOnClickListener(v -> {
+            if (tarea == null) return;
+
             tarea.setTitulo(etTitulo.getText().toString());
             tarea.setFechaObjetivo(etFechaObjetivo.getText().toString());
             tarea.setDescripcion(etDescripcion.getText().toString());
             tarea.setPrioritaria(cbPrioritaria.isChecked());
             tarea.setProgreso(valoresProgreso[spProgreso.getSelectedItemPosition()]);
 
+            Executors.newSingleThreadExecutor().execute(() -> {
+                tareaDao.actualizar(tarea);
+            });
+
             Toast.makeText(this, getString(R.string.actualizada), Toast.LENGTH_SHORT).show();
             finish();
         });
     }
 
-    // flecha atrás
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            finish(); // cierra la actividad al pulsar la flecha
+            finish();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    // Método para mostrar nombres de archivos
     private void actualizarNombresArchivos(TextView doc, TextView img, TextView aud, TextView vid) {
         if (tarea.getDocumento() != null)
             doc.setText(new File(Uri.parse(tarea.getDocumento()).getPath()).getName());
@@ -175,7 +187,6 @@ public class EditarActivity extends BaseActivity {
         else vid.setText(getString(R.string.sinArchivo));
     }
 
-    // Método para borrar archivo físico y actualizar UI
     private void borrarArchivoAdjunto(String uriString, Runnable onSuccess) {
         if (uriString == null) {
             Toast.makeText(this, getString(R.string.sinArchivo), Toast.LENGTH_SHORT).show();
@@ -189,10 +200,8 @@ public class EditarActivity extends BaseActivity {
                 .setMessage(getString(R.string.confirmarBorrarMensaje))
                 .setPositiveButton("Borrar", (dialog, which) -> {
                     File f = new File(uri.getPath());
-                    if (f.exists()) f.delete(); // borra el archivo físico
-
-                    onSuccess.run(); // actualiza la tarea y UI
-
+                    if (f.exists()) f.delete();
+                    onSuccess.run();
                     Toast.makeText(this, getString(R.string.archivoBorrado), Toast.LENGTH_SHORT).show();
                 })
                 .setNegativeButton("Cancelar", null)

@@ -58,7 +58,11 @@
     <string name="Estadísticas">Estadísticas</string>
 
     <string name="sinDato">No disponible</string>
-
+    <string name="Incompletas">Tareas incompletas:</string>
+    <string name="Completadas">Tareas incompletadas:</string>
+    <string name="Promedio">Promedio de progreso:</string>
+    <string name="Prioritarias">Tareas prioritarias:</string>
+    <string name="FechaObjetivoPromedio">Fecha objetivo promedio:</string>
 
 
     <!-- Strings para llenar el spinner -->
